@@ -156,8 +156,8 @@ export default function HomePage() {
         <section className="py-20 md:py-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div className="flex flex-col gap-6 text-center md:text-left">
-                <h1 className="text-black dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-tighter">
+              <div className="flex flex-col gap-4 sm:gap-6 text-center md:text-left">
+                <h1 className="text-black dark:text-white text-3xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tighter">
                   Your Real Estate Journey, Reimagined.
                 </h1>
                 <h2 className="text-black dark:text-white text-base md:text-lg font-normal leading-normal">

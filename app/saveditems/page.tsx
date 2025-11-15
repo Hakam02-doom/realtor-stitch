@@ -148,7 +148,7 @@ export default function SavedItemsPage() {
         <div className="max-w-7xl mx-auto">
           {/* PageHeading */}
           <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-            <p className="text-gray-900 dark:text-white text-4xl font-black tracking-tight">My Saved Items</p>
+            <p className="text-gray-900 dark:text-white text-2xl sm:text-3xl md:text-4xl font-black tracking-tight">My Saved Items</p>
           </div>
           {/* Tabs */}
           <div className="border-b border-gray-200 dark:border-gray-700">

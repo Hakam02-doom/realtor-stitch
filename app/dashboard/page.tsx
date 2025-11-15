@@ -34,10 +34,12 @@ export default function DashboardPage() {
     { id: "personal", icon: "person", label: "Profile", href: "/profile" },
   ];
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen font-display bg-background-light dark:bg-background-dark text-gray-900 dark:text-white">
       {/* SideNavBar */}
-      <aside className="w-64 flex-shrink-0 bg-white dark:bg-black/20 p-4 flex flex-col justify-between">
+      <aside className="hidden md:flex w-64 flex-shrink-0 bg-white dark:bg-black/20 p-4 flex flex-col justify-between">
         <div className="flex flex-col gap-4">
           <div className="flex gap-3 items-center p-2">
             <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
@@ -80,13 +82,76 @@ export default function DashboardPage() {
           <span className="truncate">Add New Service</span>
         </button>
       </aside>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-black/20 rounded-lg border border-gray-200 dark:border-gray-800 text-black dark:text-white"
+        aria-label="Toggle menu"
+      >
+        <span className="material-symbols-outlined">{isMobileMenuOpen ? "close" : "menu"}</span>
+      </button>
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}></div>
+      )}
+      {/* Mobile Sidebar */}
+      <aside
+        className={`md:hidden fixed left-0 top-0 h-full w-64 bg-white dark:bg-black/20 p-4 flex flex-col justify-between z-50 transform transition-transform ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-3 items-center p-2">
+            <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
+              <Image
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbY2JoTrm614mKwoC8VTFARFQMICgFrYHAnZZplmbrjyecLBKXZtKyM7U7msVo0GdUJ2o4beCwsQT24GuBmVJr6OagCNvGKPEOFjerQAEIPYBUav_xb3_Ac1DwUe43zfRcFK3UDRYkF286yR00tJPu6X3opnUwGIdsWYmxanM0oTCC50gRxDrAmTsnDSG8a727Mt8-b8346wxrd7ygVzlaY93C40TIQ0aicnHAtUE8dPKewF85p_F7ICjqZRNggtit-zXBRBWPtZx5"
+                alt="Profile picture of Catherine Miller"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+            <div className="flex flex-col">
+              <h1 className="text-black dark:text-white text-base font-medium leading-normal">Catherine Miller</h1>
+              <p className="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Realtor Professional</p>
+            </div>
+          </div>
+          <nav className="flex flex-col gap-2">
+            {menuItems.map((item) => {
+              const isActive = activeTab === item.id;
+              const className = `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                isActive
+                  ? "bg-primary/20 text-primary"
+                  : "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10"
+              }`;
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={className}
+                >
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                  <p className="text-sm font-medium leading-normal">{item.label}</p>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+        <button className="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+          <span className="truncate">Add New Service</span>
+        </button>
+      </aside>
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
           {/* PageHeading */}
-          <header className="flex flex-wrap justify-between items-center gap-4 mb-8">
-            <div className="flex min-w-72 flex-col gap-1">
-              <p className="text-black dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+          <header className="flex flex-wrap justify-between items-center gap-4 mb-6 sm:mb-8">
+            <div className="flex w-full sm:min-w-72 flex-col gap-1">
+              <p className="text-black dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                 Welcome, Catherine!
               </p>
               <p className="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">

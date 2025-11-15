@@ -29,11 +29,13 @@ export default function ProfilePage() {
     { id: "settings", icon: "settings", label: "Account Settings", href: "#" },
   ];
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden font-display bg-background-light dark:bg-background-dark">
       <div className="flex min-h-screen">
         {/* SideNavBar */}
-        <aside className="flex flex-col w-64 bg-white dark:bg-[#0f0f0f] border-r border-gray-200 dark:border-gray-800 p-4 shrink-0">
+        <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-[#0f0f0f] border-r border-gray-200 dark:border-gray-800 p-4 shrink-0">
           <div className="flex flex-col gap-4">
             <div className="flex gap-3 items-center">
               <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
@@ -90,13 +92,95 @@ export default function ProfilePage() {
             </button>
           </div>
         </aside>
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-[#0f0f0f] rounded-lg border border-gray-200 dark:border-gray-800 text-black dark:text-white"
+          aria-label="Toggle menu"
+        >
+          <span className="material-symbols-outlined">{isMobileMenuOpen ? "close" : "menu"}</span>
+        </button>
+        {/* Mobile Sidebar Overlay */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-40 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}></div>
+        )}
+        {/* Mobile Sidebar */}
+        <aside
+          className={`md:hidden fixed left-0 top-0 h-full w-64 bg-white dark:bg-[#0f0f0f] border-r border-gray-200 dark:border-gray-800 p-4 shrink-0 z-50 transform transition-transform ${
+            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col gap-4">
+            <div className="flex gap-3 items-center">
+              <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
+                <Image
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzwpvdwReLT2vNA5MffSWgclVNuVXJ5K-Qq06SKxMyExI39zB9zJUQ36tOVASKChWu1Bsb7ty2MV8KAnm32wHfRIbKsdNt0BggfAvGZQS9Fv2LS_vqZ01DdhDPwMJpRezdrOos3pyG0A8796Hu8Dtzi0V6oOJgpFRVWdPJH2bFOp954O_GRqrgM5whx3r-MryEXulBMrb5i1HpKe3VgKugNIsXzujhu9Aew14LzMlQ2011fvD8OUDxFAU0QaniY3dcVWcTB5_5jW-C"
+                  alt="User profile picture of Alex Doe"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-[#1A1A1A] dark:text-white text-base font-medium leading-normal">Alex Doe</h1>
+                <p className="text-[#6c757d] dark:text-gray-400 text-sm font-normal leading-normal">Interior Designer</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 mt-4">
+              {menuItems.map((item) => {
+                const isActive = activeTab === item.id;
+                const className = `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                  isActive
+                    ? "bg-primary/20 text-primary dark:bg-primary/30"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`;
+                const iconClassName = isActive ? "text-primary" : "text-[#1A1A1A] dark:text-gray-300";
+                const textClassName = isActive
+                  ? "text-primary"
+                  : "text-[#1A1A1A] dark:text-gray-300";
+
+                if (item.href) {
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className={className}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className={`material-symbols-outlined ${iconClassName}`}>{item.icon}</span>
+                      <p className={`text-sm font-medium leading-normal ${textClassName}`}>{item.label}</p>
+                    </Link>
+                  );
+                }
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={className}
+                  >
+                    <span className={`material-symbols-outlined ${iconClassName}`}>{item.icon}</span>
+                    <p className={`text-sm font-medium leading-normal ${textClassName}`}>{item.label}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mt-auto">
+            <button className="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-200 dark:bg-gray-700 text-[#1A1A1A] dark:text-white text-sm font-bold leading-normal tracking-[0.015em]">
+              <span className="truncate">View Public Profile</span>
+            </button>
+          </div>
+        </aside>
         {/* Main Content */}
-        <main className="flex-1 p-6 sm:p-8 lg:p-10">
+        <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-10">
           <div className="max-w-4xl mx-auto">
             {/* PageHeading */}
-            <div className="flex flex-wrap justify-between gap-3 mb-8">
-              <div className="flex min-w-72 flex-col gap-2">
-                <p className="text-[#1A1A1A] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+            <div className="flex flex-wrap justify-between gap-3 mb-6 sm:mb-8">
+              <div className="flex w-full sm:min-w-72 flex-col gap-2">
+                <p className="text-[#1A1A1A] dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                   Personal Information
                 </p>
                 <p className="text-[#6c757d] dark:text-gray-400 text-base font-normal leading-normal">
@@ -128,7 +212,7 @@ export default function ProfilePage() {
                       </p>
                     </div>
                   </div>
-                  <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-gray-800 text-[#1A1A1A] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] sm:w-auto">
+                  <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-gray-800 text-[#1A1A1A] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] w-full sm:w-auto">
                     <span className="truncate">Upload new picture</span>
                   </button>
                 </div>
@@ -201,11 +285,11 @@ export default function ProfilePage() {
                 </div>
               </form>
               {/* Footer Actions */}
-              <div className="flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-800">
-                <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-gray-800 text-[#1A1A1A] dark:text-white text-sm font-bold leading-normal tracking-[0.015em]">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 p-4 sm:p-6 border-t border-gray-200 dark:border-gray-800">
+                <button className="flex w-full sm:min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-gray-800 text-[#1A1A1A] dark:text-white text-sm font-bold leading-normal tracking-[0.015em]">
                   <span className="truncate">Cancel</span>
                 </button>
-                <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                <button className="flex w-full sm:min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
                   <span className="truncate">Save Changes</span>
                 </button>
               </div>

@@ -139,7 +139,7 @@ export default function DetailsPage() {
             {/* PageHeading Component */}
             <div className="flex flex-wrap justify-between items-start gap-4 p-4">
               <div className="flex flex-col gap-2">
-                <p className="text-gray-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
+                <p className="text-gray-900 dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                   123 Main Street, Brooklyn, NY 11201
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
@@ -291,7 +291,7 @@ export default function DetailsPage() {
                   <div className="flex flex-col gap-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-6">
                     <div className="pb-4 border-b border-gray-200 dark:border-gray-700">
                       <p className="text-gray-600 dark:text-gray-400 text-lg">Price</p>
-                      <p className="text-gray-900 dark:text-white text-4xl font-extrabold">$1,450,000</p>
+                      <p className="text-gray-900 dark:text-white text-2xl sm:text-3xl md:text-4xl font-extrabold">$1,450,000</p>
                       <p className="text-gray-500 dark:text-gray-400 mt-1">Est. Mortgage: $7,200/mo</p>
                     </div>
                     <div className="flex flex-col gap-3">

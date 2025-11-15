@@ -31,8 +31,8 @@ export default function CalendarPage() {
             </div>
             {/* Page Heading */}
             <div className="flex flex-wrap justify-between gap-3 p-4">
-              <div className="flex min-w-72 flex-col gap-3">
-                <p className="text-[#101618] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+              <div className="flex w-full sm:min-w-72 flex-col gap-3">
+                <p className="text-[#101618] dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                   Schedule a Viewing for 123 Maple Street, Anytown, USA
                 </p>
                 <p className="text-[#5e818d] dark:text-gray-300 text-base font-normal leading-normal">

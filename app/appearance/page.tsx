@@ -51,10 +51,12 @@ export default function AppearancePage() {
     }
   };
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="flex min-h-screen font-display bg-background-light dark:bg-background-dark text-[#101618] dark:text-gray-200">
       {/* SideNavBar */}
-      <aside className="w-64 shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800 p-4 flex flex-col justify-between">
+      <aside className="hidden md:flex w-64 shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800 p-4 flex flex-col justify-between">
         <div className="flex flex-col gap-8">
           <div className="flex items-center gap-3 p-2">
             <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
@@ -107,13 +109,88 @@ export default function AppearancePage() {
           </a>
         </div>
       </aside>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-background-dark rounded-lg border border-gray-200 dark:border-gray-800 text-[#101618] dark:text-white"
+        aria-label="Toggle menu"
+      >
+        <span className="material-symbols-outlined">{isMobileMenuOpen ? "close" : "menu"}</span>
+      </button>
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}></div>
+      )}
+      {/* Mobile Sidebar */}
+      <aside
+        className={`md:hidden fixed left-0 top-0 h-full w-64 bg-white dark:bg-background-dark dark:border-r dark:border-gray-800 p-4 flex flex-col justify-between z-50 transform transition-transform ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center gap-3 p-2">
+            <div className="relative bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 overflow-hidden">
+              <Image
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-uL6mo7aqeMIMIUKLS8T6klHS9lhDu3xtno1Tgg43pgml0THte7eNeQGMB2RmouMIImMIs9AMvclpb46A98r_8B5MAJdwAoQHl7jCLvYFJ5whRCcX8re92No3VL4uzpIkzfnWH1kBqVAlpYErtSnCnzkgsGfptQvyMk_SKdwMg1zmCWtcwSxeUN7AW63VqVC16tWZoab-Tb2LfmsktAHdxshmwKZRhRmeSooQwbCmJNMDezkcL8FruS6OfDXNp_F8XDU7jxo8U795"
+                alt="User profile picture"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+            <div className="flex flex-col">
+              <h1 className="text-[#101618] dark:text-white text-base font-medium leading-normal">Jordan Smith</h1>
+              <p className="text-[#5e818d] dark:text-gray-400 text-sm font-normal leading-normal">
+                jordan.smith@email.com
+              </p>
+            </div>
+          </div>
+          <nav className="flex flex-col gap-2">
+            {menuItems.map((item) => {
+              const isActive = activeTab === item.id;
+              const className = `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                isActive
+                  ? "bg-primary/20 text-primary dark:bg-primary/30"
+                  : "text-[#5e818d] dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+              }`;
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={className}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                  <p className="text-sm font-medium leading-normal">{item.label}</p>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+        <div className="flex flex-col gap-2">
+          <a
+            className="flex items-center gap-3 px-3 py-2 text-[#5e818d] dark:text-gray-400 hover:text-primary dark:hover:text-primary"
+            href="#"
+          >
+            <span className="material-symbols-outlined">help</span>
+            <p className="text-sm font-medium leading-normal">Help &amp; Support</p>
+          </a>
+          <a
+            className="flex items-center gap-3 px-3 py-2 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+            href="#"
+          >
+            <span className="material-symbols-outlined">logout</span>
+            <p className="text-sm font-medium leading-normal">Logout</p>
+          </a>
+        </div>
+      </aside>
       {/* Main Content */}
-      <main className="flex-1 p-8 md:p-12">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-12">
         <div className="max-w-4xl mx-auto">
           {/* PageHeading */}
-          <header className="flex flex-wrap justify-between gap-3 mb-10">
-            <div className="flex min-w-72 flex-col gap-2">
-              <h1 className="text-[#101618] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+          <header className="flex flex-wrap justify-between gap-3 mb-6 sm:mb-10">
+            <div className="flex w-full sm:min-w-72 flex-col gap-2">
+              <h1 className="text-[#101618] dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                 Settings
               </h1>
               <p className="text-[#5e818d] dark:text-gray-400 text-base font-normal leading-normal">

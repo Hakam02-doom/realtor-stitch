@@ -55,7 +55,7 @@ export default function LoadingPage() {
             </header>
             <main className="flex flex-col items-center py-12 sm:py-20 gap-10 sm:gap-12">
               <div className="flex flex-col gap-3 p-4 text-center">
-                <p className="text-[#101618] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">
+                <p className="text-[#101618] dark:text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
                   What brings you here today?
                 </p>
                 <p className="text-[#5e818d] dark:text-gray-400 text-base font-normal leading-normal">
